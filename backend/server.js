@@ -15,7 +15,7 @@ app.listen(5000, console.log('Server running on port 5000'));
 
 // a GET request to the root confirms the API is online
 app.get('/', (req, res) => {
-  res.send('API is running');
+  res.send('API is running...');
 });
 
 // a GET request to return all products
