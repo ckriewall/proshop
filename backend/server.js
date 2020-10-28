@@ -6,16 +6,27 @@
 // load modules
 const express = require('express');
 const products = require('./data/products');
+const dotenv = require('dotenv');
+
+// load env configuration from /proshop/.env
+dotenv.config();
 
 //start express
 const app = express();
 
 // listen for connections on port 5000
-app.listen(5000, console.log('Server running on port 5000'));
+app.listen(
+  5000,
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`
+  )
+);
 
 // a GET request to the root confirms the API is online
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send(
+    `Server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`
+  );
 });
 
 // a GET request to return all products
