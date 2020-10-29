@@ -1,12 +1,8 @@
-// Modules are loaded with CommonJS rather than ES modules import.
-// CommonJS is a module formatting system. It is a standard for
-// structuring and organizing JavaScript code.
-// We'll move to ES modules later
-
-// load modules
-const express = require('express');
-const products = require('./data/products');
-const dotenv = require('dotenv');
+// ES module syntax replaces CommonJS syntax.
+// Load modules
+import express from 'express';
+import dotenv from 'dotenv';
+import products from './data/products.js';
 
 // load env configuration from /proshop/.env
 dotenv.config();
