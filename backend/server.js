@@ -2,10 +2,14 @@
 // Load modules
 import express from 'express';
 import dotenv from 'dotenv';
+
+import connectDB from './config/db.js';
 import products from './data/products.js';
 
 // load env configuration from /proshop/.env
 dotenv.config();
+
+connectDB();
 
 //start express
 const app = express();
