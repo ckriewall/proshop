@@ -1,10 +1,9 @@
-// ES module syntax replaces CommonJS syntax.
-// Load modules
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import connectDB from './config/db.js';
-import products from './data/products.js';
+
+import productRoutes from './routes/productRoutes.js';
 
 // load env configuration from /proshop/.env
 dotenv.config();
@@ -30,15 +29,5 @@ app.get('/', (req, res) => {
   );
 });
 
-// a GET request to return all products
-// test at http://localhost:5000/api/products
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-
-// a GET request to return one product
-// test at http://localhost:5000/api/products/1
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
+// use productRoutes.js to handle requests to /api/products
+app.use('/api/products', productRoutes);
