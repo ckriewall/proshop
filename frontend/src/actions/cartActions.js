@@ -5,7 +5,7 @@ Calling an async dispatch function within the addToCart
 action creator is possible because of redux-thunk.
 */
 import axios from 'axios';
-import { CART_ADD_ITEM } from '../constants/cartConstants';
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants';
 
 /*
 The addToCart() action creator:
@@ -31,6 +31,22 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
         countInStock: data.countInStock,
         qty,
       },
+    });
+
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify(getState().cart.cartItems)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CART_REMOVE_ITEM,
+      payload: id,
     });
 
     localStorage.setItem(

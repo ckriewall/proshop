@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import {
   Row,
   Col,
@@ -19,7 +19,7 @@ import Message from '../components/Message';
   3. Apply useDispatch from react-redux to add the new item to the cart
   4. Calculate total items and total price using array.reduce()
   5. Render the cart details
-  6. Wire up addToCart and checkout handlers to fill in later.
+  6. Use the removeFromCart handler to dispatch the associated action.
 */
 
 const CartScreen = ({ match, history, location }) => {
@@ -37,7 +37,7 @@ const CartScreen = ({ match, history, location }) => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log('remove');
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
