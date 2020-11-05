@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcryptjs';
 /*
     SCHEMAS
     Each schema maps to a MongoDB collection and defines
     the shape of the documents within that collection.
 
-    Pass an object to the Schema method
-    to define the data structure
+    Pass an object to the Schema method to define the data structure.abs
+
+    Schema methods (like matchPassword) are instance methods to documents
+    constructed from Models compiled from this schema
 */
 
 const userSchema = mongoose.Schema(
@@ -37,6 +39,11 @@ const userSchema = mongoose.Schema(
   */
   { timestamps: true }
 );
+
+// match.password is called ON a specific user, the user becomes 'this'
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 // Create a model from the defined schema
 const User = mongoose.model('User', userSchema);

@@ -4,21 +4,26 @@ import colors from 'colors';
 import connectDB from './config/db.js';
 
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 /*
- Serving data with Express requires us to:
-  1. Load our environment variables from .env 
+ To serve data with Express we:
+  1. Load environment variables from .env 
   2. Open a MongoDB connection
   3. Start Express
-  4. Listen for connections on port 5000
-  5. Handle valid routes
-  6. Handle errors
+  4. Enable the middleware express.json to parse JSON
+     submitted through the login form
+  5. Listen for connections on port 5000
+  6. Handle valid routes
+  7. Handle errors
 */
 
 dotenv.config();
 connectDB();
 const app = express();
+app.use(express.json());
+
 app.listen(
   5000,
   console.log(
@@ -41,5 +46,6 @@ app.get('/', (req, res) => {
   );
 });
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 app.use(notFound);
 app.use(errorHandler);
