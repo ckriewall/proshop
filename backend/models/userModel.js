@@ -45,6 +45,18 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// before a user is saved check for a password change
+userSchema.pre('save', async function (next) {
+  // if the password hasn't changed move to the next step in the middleware chain
+  if (!this.isModified('password')) {
+    next();
+  }
+
+  // if the password has changed, hash it before saving
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
 // Create a model from the defined schema
 const User = mongoose.model('User', userSchema);
 
